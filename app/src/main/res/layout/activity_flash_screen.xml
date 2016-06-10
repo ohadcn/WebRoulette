@@ -9,4 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="simplers.webroulette.FlashScreenActivity">
 
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo" />
+    <!--android:src="@drawable/logo"--> />
+
 </RelativeLayout>

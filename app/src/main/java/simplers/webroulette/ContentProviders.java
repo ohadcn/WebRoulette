@@ -37,16 +37,18 @@ public class ContentProviders {
 
     public static String getRandomUrl() {
 
-        int numOfProviders = 11;
+        int numOfProviders = 12;
         int random = rn.nextInt(numOfProviders);
         String pattern;
         System.out.println(random);
 
-        switch (random+1) {
+        switch (random) {
             case 0:     //reddit
-                return "https://m.reddit.com/r/random/";
+                return getRandomUrl();
+//                return "https://m.reddit.com/r/random/";
             case 1:     //recipes
-                return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
+                return getRandomUrl();
+//                return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
             case 2:     //wiki
                 return "https://en.wikipedia.org/wiki/Special:Random";
 

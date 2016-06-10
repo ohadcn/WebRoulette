@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,40 +15,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nextButton"
-        android:layout_gravity="bottom|right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="25dp"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
         android:background="@mipmap/next_image" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/menu_button"
+        android:background="@mipmap/menu_icon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"/>
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/share_button"
+        android:visibility="gone"
+        android:background="@mipmap/white_background"
+        android:layout_toLeftOf="@id/menu_button"
+        android:src="@android:drawable/ic_menu_share" />
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="25dp"
+        android:id="@+id/back_button"
+        android:visibility="gone"
+        android:layout_toLeftOf="@id/share_button"
+        android:background="@mipmap/white_background"
+        android:src="@android:drawable/ic_media_rew" />
 
-
-        </LinearLayout>
-    </FrameLayout>
-
-</FrameLayout>
+</RelativeLayout>

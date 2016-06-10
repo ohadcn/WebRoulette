@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,26 +21,38 @@ import org.json.JSONTokener;
  * Created by ohad on 6/9/16.
  */
 public class ContentProviders {
+
+    public static String compileRegex(String url, String pattern){
+
+        String resp = getURL(url);
+        Pattern patt = Pattern.compile(pattern);
+        Matcher matcher = patt.matcher(resp);
+        matcher.find();
+        //System.out.println();
+        String rest = resp.substring(matcher.start(),matcher.end());
+        return rest ;
+    }
+
+    private static Random rn = new Random();
+
     public static String getRandomUrl() {
 
-        int numOfProviders = 5;
-        Random rn = new Random();
-        Integer random = rn.nextInt(numOfProviders);
+        int numOfProviders = 7;
+        int random = rn.nextInt(numOfProviders);
+        String pattern;
         System.out.println(random);
 
-        switch (random) {
+        switch (random+1) {
             case 0:     //reddit
                 return "https://m.reddit.com/r/random/";
-            case 1:     //ebay
-                return "http://kice.me/randomebay/";
-            case 2:     //recipes
+            case 1:     //recipes
                 return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
-            case 3:     //wiki
+            case 2:     //wiki
                 return "https://en.wikipedia.org/wiki/Special:Random";
 
-            case 4: //youtube
+            case 3: //youtube
                 Random rnx = new Random();
-                random = rnx.nextInt(3999) + 1;
+                random = rnx.nextInt(3998) + 1;
                 System.out.println(random);
                 String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
                 try {
@@ -46,10 +60,25 @@ public class ContentProviders {
                     return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    return getRandomUrl();
                 }
-            default:
-                return "http://lmgtfy.com/agsdgasd";
+            case 4:
+                String str= "http://kice.me/randomebay/";
 
+                pattern = "\\b(http?|ftp|file)://www.ebay[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
+                return compileRegex(str,pattern).replace("www", "m") ;
+            case 5:
+                return "http://9gag.com/random";
+            case 6:
+                String stramz= "http://thanland.com/projects/random-amazon/";
+
+                pattern = "\\b(http?|ftp|file)://amzn[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
+                return compileRegex(stramz,pattern);
+            case 7:
+                return "http://c.xkcd.com/random/mobile_comic/";
+            default:
+                System.out.println("Something weired happened: random=" + Integer.toString(random));
+                return getRandomUrl();
         }
     }
 

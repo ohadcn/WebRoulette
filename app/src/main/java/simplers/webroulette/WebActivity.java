@@ -2,6 +2,7 @@ package simplers.webroulette;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -21,65 +23,7 @@ import android.widget.ImageButton;
 public class WebActivity extends AppCompatActivity {
 
     private static WebActivity self = null;
-
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
-    private static final int UI_ANIMATION_DELAY = 300;
-    private final Handler mHideHandler = new Handler();
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-
-        }
-    };
-    private View mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
+    private boolean mVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,47 +32,88 @@ public class WebActivity extends AppCompatActivity {
         self = this;
         setContentView(R.layout.activity_web);
 
-        mVisible = true;
-        mControlsView = findViewById(R.id.fullscreen_content_controls);
-
         ImageButton nextBtn = (ImageButton) findViewById(R.id.nextButton);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 (new nextLinkRun()).execute();
+                if(mVisible)
+                    hideMenu();
             }
         });
         nextBtn.bringToFront();
+
+        ImageButton menuBtn = (ImageButton)findViewById(R.id.menu_button);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle();
+            }
+        });
+
+        ImageButton shareButton = (ImageButton)findViewById(R.id.share_button);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebView webView = (WebView)findViewById(R.id.webView);
+                String url = webView.getUrl();
+                String title = webView.getTitle();
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, title + "\n" + url +
+                        "\nShared from WebRoulette!");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                hideMenu();
+            }
+        });
+
+        ImageButton backButton = (ImageButton)findViewById(R.id.back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WebView webView = (WebView) findViewById(R.id.webView);
+                if(!webView.canGoBack()) {
+                    Toast.makeText(v.getContext(), "No back from here", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                webView.goBack();
+                hideMenu();
+            }
+        });
 
         WebView webView = (WebView)findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
-        webView.getSettings().setUserAgentString("Mobile Android");
+        webView.getSettings().setUserAgentString("Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02");
 
         (new nextLinkRun()).execute();
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
 
     }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available.
-        delayedHide(100);
-    }
-
     private void toggle() {
         if (mVisible) {
-            hide();
+            hideMenu();
         } else {
-            show();
+            showMenu();
         }
+        mVisible = !mVisible;
+    }
+
+    private void hideMenu() {
+        ImageButton backBtn = (ImageButton)findViewById(R.id.back_button);
+        backBtn.setVisibility(View.GONE);
+        ImageButton shareBtn = (ImageButton)findViewById(R.id.share_button);
+        shareBtn.setVisibility(View.GONE);
+
+    }
+
+    private void showMenu() {
+        ImageButton backBtn = (ImageButton)findViewById(R.id.back_button);
+        backBtn.setVisibility(View.VISIBLE);
+        ImageButton shareBtn = (ImageButton)findViewById(R.id.share_button);
+        shareBtn.setVisibility(View.VISIBLE);
+
     }
 
     private void hide() {
@@ -137,12 +122,12 @@ public class WebActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
+//        mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
         // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+//        mHideHandler.removeCallbacks(mShowPart2Runnable);
+//        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
@@ -151,17 +136,8 @@ public class WebActivity extends AppCompatActivity {
         mVisible = true;
 
         // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-    }
-
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+//        mHideHandler.removeCallbacks(mHidePart2Runnable);
+//        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
     static class nextLinkRun extends AsyncTask<Void, String, String> {

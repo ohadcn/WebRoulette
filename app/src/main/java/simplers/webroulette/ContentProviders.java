@@ -37,7 +37,7 @@ public class ContentProviders {
 
     public static String getRandomUrl() {
 
-        int numOfProviders = 7;
+        int numOfProviders = 11;
         int random = rn.nextInt(numOfProviders);
         String pattern;
         System.out.println(random);
@@ -76,6 +76,12 @@ public class ContentProviders {
                 return compileRegex(stramz,pattern);
             case 7:
                 return "http://c.xkcd.com/random/mobile_comic/";
+            case 9:
+                return "http://www.uroulette.com/visit/rotrw";
+            case 10:
+                return "http://www.randomwebsite.com/cgi-bin/random.pl";
+            case 11:
+                return "http://wordpress.com/next/";
             default:
                 System.out.println("Something weired happened: random=" + Integer.toString(random));
                 return getRandomUrl();

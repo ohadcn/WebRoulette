@@ -42,6 +42,7 @@ public class ContentProviders {
         String pattern;
         System.out.println(random);
 
+//        random = 12;
         switch (random) {
             case 0:     //reddit
                 return getRandomUrl();
@@ -85,17 +86,21 @@ public class ContentProviders {
             case 11:
                 return "http://wordpress.com/next/";
             case 12:
-                int[] ids = {1, 3, 7, 9, 10, 22, 23, 24};
-                int id = ids[rn.nextInt(ids.length)];
-                try {
-                    String resp = getURL("https://www.ted.com/surprise-me.json?minutes=5&rating_word_id="
-                            + Integer.toString(id));
-                    JSONObject tedResp = (JSONObject) (new JSONTokener(resp)).nextValue();
-                    return tedResp.getJSONArray("talks").getJSONObject(0).getString("canonical");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return getRandomUrl();
-                }
+                return getRandomUrl();
+//                int[] ids = {1, 3, 7, 9, 10, 22, 23, 24};
+//                int id = ids[rn.nextInt(ids.length)];
+//                String resp = null;
+//                try {
+//                    resp = getURL("https://www.ted.com/surprise-me.json?minutes=5&rating_word_id="
+//                            + Integer.toString(id));
+//                    JSONObject tedResp = (JSONObject) (new JSONTokener(resp)).nextValue();
+//                    return tedResp.getJSONArray("talks").getJSONObject(0).getString("canonical");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    System.out.println(resp);
+//                    System.out.println(id);
+//                    return getRandomUrl();
+//                }
             default:
                 System.out.println("Something weired happened: random=" + Integer.toString(random));
                 return getRandomUrl();

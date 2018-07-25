@@ -40,7 +40,10 @@ public class ContentProviders {
         int numOfProviders = 13;
         int random = rn.nextInt(numOfProviders);
         String pattern;
-        System.out.println(random);
+        if(BuildConfig.DEBUG) {
+            System.out.println("getRandomUrl");
+            System.out.println(random);
+        }
 
 //        random = 12;
         switch (random) {
@@ -53,18 +56,21 @@ public class ContentProviders {
             case 2:     //wiki
                 return "https://en.wikipedia.org/wiki/Special:Random";
 
-//            case 3: //youtube
-//                Random rnx = new Random();
-//                random = rnx.nextInt(3998) + 1;
-//                System.out.println(random);
-//                String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
-//                try {
-//                    JSONObject s = (JSONObject) (new JSONTokener(x)).nextValue();
-//                    return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    return getRandomUrl();
-//                }
+            case 3: //youtube
+                Random rnx = new Random();
+                random = rnx.nextInt(3998) + 1;
+                if(BuildConfig.DEBUG) {
+                    System.out.println("youtube");
+                    System.out.println(random);
+                }
+                String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
+                try {
+                    JSONObject s = (JSONObject) (new JSONTokener(x)).nextValue();
+                    return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return getRandomUrl();
+                }
 //            case 4:
 //                String str= "http://kice.me/randomebay/";
 //

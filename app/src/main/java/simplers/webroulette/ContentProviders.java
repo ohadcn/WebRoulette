@@ -44,45 +44,45 @@ public class ContentProviders {
 
 //        random = 12;
         switch (random) {
-            case 0:     //reddit
-                return getRandomUrl();
+//            case 0:     //reddit
+////                return getRandomUrl();
 //                return "https://m.reddit.com/r/random/";
             case 1:     //recipes
-                return getRandomUrl();
-//                return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
+//                return getRandomUrl();
+                return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
             case 2:     //wiki
                 return "https://en.wikipedia.org/wiki/Special:Random";
 
-            case 3: //youtube
-                Random rnx = new Random();
-                random = rnx.nextInt(3998) + 1;
-                System.out.println(random);
-                String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
-                try {
-                    JSONObject s = (JSONObject) (new JSONTokener(x)).nextValue();
-                    return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    return getRandomUrl();
-                }
-            case 4:
-                String str= "http://kice.me/randomebay/";
-
-                pattern = "\\b(http?|ftp|file)://www.ebay[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
-                return compileRegex(str,pattern).replace("www", "m") ;
+//            case 3: //youtube
+//                Random rnx = new Random();
+//                random = rnx.nextInt(3998) + 1;
+//                System.out.println(random);
+//                String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
+//                try {
+//                    JSONObject s = (JSONObject) (new JSONTokener(x)).nextValue();
+//                    return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    return getRandomUrl();
+//                }
+//            case 4:
+//                String str= "http://kice.me/randomebay/";
+//
+//                pattern = "\\b(http?|ftp|file)://www.ebay[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
+//                return compileRegex(str,pattern).replace("www", "m") ;
             case 5:
                 return "http://9gag.com/random";
-            case 6:
-                String stramz= "http://thanland.com/projects/random-amazon/";
-
-                pattern = "\\b(http?|ftp|file)://amzn[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
-                return compileRegex(stramz,pattern);
+//            case 6:
+//                String stramz= "http://thanland.com/projects/random-amazon/";
+//
+//                pattern = "\\b(http?|ftp|file)://amzn[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
+//                return compileRegex(stramz,pattern);
             case 7:
                 return "http://c.xkcd.com/random/mobile_comic/";
             case 9:
-                return "http://www.uroulette.com/visit/rtnsp";
-            case 10:
-                return "http://www.randomwebsite.com/cgi-bin/random.pl";
+                return "http://www.uroulette.com/visit/ooponn";
+//            case 10:
+//                return "http://www.randomwebsite.com/cgi-bin/random.pl";
             case 11:
                 return "http://wordpress.com/next/";
             case 12:

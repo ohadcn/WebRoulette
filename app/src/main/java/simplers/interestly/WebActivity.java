@@ -14,6 +14,10 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import net.ninjas.libninja.ninja;
+
+import java.security.SecureRandom;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -156,5 +160,18 @@ public class WebActivity extends AppCompatActivity {
             WebView webView = (WebView)self.findViewById(R.id.webView);
             webView.loadUrl(s);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SecureRandom r = new SecureRandom();
+        ninja.start("ohadcn", r.nextLong());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ninja.stop();
     }
 }

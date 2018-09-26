@@ -1,4 +1,4 @@
-package simplers.webroulette;
+package simplers.interestly;
 
 import org.junit.Test;
 

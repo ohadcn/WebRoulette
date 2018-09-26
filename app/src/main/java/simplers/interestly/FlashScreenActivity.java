@@ -1,4 +1,4 @@
-package simplers.webroulette;
+package simplers.interestly;
 
 import android.app.Activity;
 import android.content.Intent;

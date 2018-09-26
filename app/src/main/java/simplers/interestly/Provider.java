@@ -1,4 +1,4 @@
-package simplers.webroulette;
+package simplers.interestly;
 
 /**
  * Created by ohad on 6/9/16.

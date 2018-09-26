@@ -1,0 +1,3 @@
+[submodule "libninja"]
+	path = libninja
+	url = https://github.com/net-ninjas/android-prox

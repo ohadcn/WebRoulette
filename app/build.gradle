@@ -7,8 +7,8 @@ android {
         applicationId "simplers.interestly"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 2
-        versionName "2.0"
+        versionCode 23
+        versionName "2.3"
     }
     buildTypes {
         release {

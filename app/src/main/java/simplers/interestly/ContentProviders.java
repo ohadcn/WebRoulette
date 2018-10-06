@@ -46,27 +46,32 @@ public class ContentProviders {
 
 //        random = 12;
         switch (random) {
-//            case 0:     //reddit
-////                return getRandomUrl();
-//                return "https://m.reddit.com/r/random/";
+            case 0:     //reddit
+//                return getRandomUrl();
+                return "https://m.reddit.com/r/random/";
             case 1:     //recipes
 //                return getRandomUrl();
-                return "http://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
+                return "https://www.whatsfordinner.net/Whats-for-dinner-recipes-Refresh.html";
             case 2:     //wiki
                 return "https://en.wikipedia.org/wiki/Special:Random";
 
             case 3: //youtube
                 Random rnx = new Random();
                 random = rnx.nextInt(3998) + 1;
-                if(BuildConfig.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     System.out.println("youtube");
                     System.out.println(random);
                 }
-                String x = getURL("http://ytroulette.com/roulette.php?pos=" + random);
+                String x = getURL("https://ytroulette.com/roulette.php?cat=0&pos=" + random);
                 try {
                     JSONObject s = (JSONObject) (new JSONTokener(x)).nextValue();
                     return "https://m.youtube.com/watch?v=" + (s.get("idVideo"));
-                } catch (JSONException e) {
+                } catch (ClassCastException e) {
+                    System.out.println(x);
+                    e.printStackTrace();
+                    return getRandomUrl();
+                }catch (JSONException e) {
+                    System.out.println(x);
                     e.printStackTrace();
                     return getRandomUrl();
                 }
@@ -76,20 +81,20 @@ public class ContentProviders {
 //                pattern = "\\b(http?|ftp|file)://www.ebay[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
 //                return compileRegex(str,pattern).replace("www", "m") ;
             case 5:
-                return "http://9gag.com/random";
+                return "https://m.9gag.com/random";
 //            case 6:
 //                String stramz= "http://thanland.com/projects/random-amazon/";
 //
 //                pattern = "\\b(http?|ftp|file)://amzn[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"; // matches <http://google.com>
 //                return compileRegex(stramz,pattern);
             case 7:
-                return "http://c.xkcd.com/random/mobile_comic/";
-            case 9:
-                return "http://www.uroulette.com/visit/ooponn";
+                return "https://c.xkcd.com/random/mobile_comic/";
+//            case 9:
+//                return "http://www.uroulette.com/visit/ooponn";
 //            case 10:
 //                return "http://www.randomwebsite.com/cgi-bin/random.pl";
             case 11:
-                return "http://wordpress.com/next/";
+                return "https://wordpress.com/next/";
             case 12:
                 return getRandomUrl();
 //                int[] ids = {1, 3, 7, 9, 10, 22, 23, 24};
@@ -119,7 +124,7 @@ public class ContentProviders {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
-//            conn.setRequestProperty("User-Agent", "BitSafe App");
+            conn.setRequestProperty("User-Agent", "Interestly");
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             conn.connect();

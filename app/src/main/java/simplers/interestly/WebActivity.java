@@ -3,6 +3,7 @@ package simplers.interestly;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +64,7 @@ public class WebActivity extends AppCompatActivity {
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, title + "\n" + url +
-                        "\nShared from WebRoulette!");
+                        "\nShared from Interestly!");
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
                 hideMenu();
@@ -93,7 +94,7 @@ public class WebActivity extends AppCompatActivity {
         });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(false);
-//        webView.getSettings().setUserAgentString("Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02");
+        webView.getSettings().setUserAgentString(getString(R.string.app_name) + "/" + BuildConfig.VERSION_NAME + " Mobile / Android " + Build.VERSION.CODENAME);
 
         (new nextLinkRun()).execute();
 
